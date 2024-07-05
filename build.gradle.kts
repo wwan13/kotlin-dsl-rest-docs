@@ -18,16 +18,6 @@ allprojects {
     repositories {
         mavenCentral()
     }
-
-    tasks {
-        bootJar {
-            enabled = false
-        }
-
-        jar {
-            enabled = true
-        }
-    }
 }
 
 subprojects {
@@ -59,6 +49,16 @@ subprojects {
                 jvmTarget = "17"
             }
         }
+
+        bootJar {
+            enabled = false
+            archiveClassifier.set("")
+        }
+
+        jar {
+            enabled = true
+            archiveClassifier.set("")
+        }
     }
 }
 
@@ -70,7 +70,19 @@ publishing {
     }
 }
 
-tasks.wrapper {
-    gradleVersion = "7.5"
-    distributionType = Wrapper.DistributionType.ALL
+tasks {
+    wrapper {
+        gradleVersion = "7.5"
+        distributionType = Wrapper.DistributionType.ALL
+    }
+
+    bootJar {
+        enabled = false
+        archiveClassifier.set("")
+    }
+
+    jar {
+        enabled = true
+        archiveClassifier.set("")
+    }
 }
