@@ -4,7 +4,7 @@ interface ApiRequestBuilder {
 
     fun requestHeader(key: String, value: String): ApiRequestBuilder
 
-    fun bearerToken(token: String): ApiRequestBuilder
+    fun withBearerToken(): ApiRequestBuilder
 
     fun queryParam(key: String, value: String): ApiRequestBuilder
 
