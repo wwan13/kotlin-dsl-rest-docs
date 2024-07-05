@@ -1,3 +1,6 @@
+# Kotlin Dsl Rest Docs
+[![](https://jitpack.io/v/wwan13/kotlin-dsl-rest-docs.svg)](https://jitpack.io/#wwan13/kotlin-dsl-rest-docs)
+
 ## AS IS
 ~~~kotlin
 @Test
