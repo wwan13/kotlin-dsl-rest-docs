@@ -2,7 +2,6 @@ package io.wwan13.implmockmvc.docs
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
 import io.wwan13.api.document.ApiDocumentContext
-import io.wwan13.api.document.ApiDocumentContextBuilder
 import io.wwan13.api.document.ApiDocumentGenerator
 import org.springframework.restdocs.operation.preprocess.Preprocessors
 import org.springframework.restdocs.payload.PayloadDocumentation
