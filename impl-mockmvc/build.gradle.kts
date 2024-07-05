@@ -1,4 +1,6 @@
 dependencies {
+    compileOnly(project(":api"))
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     implementation("org.springframework.restdocs:spring-restdocs-mockmvc")
