@@ -3,6 +3,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.5"
     kotlin("jvm") version "1.9.24"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("maven-publish")
 }
 
 allprojects {
@@ -12,7 +13,7 @@ allprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     group = "io.wwan13"
-    version = "0.0.1-SNAPSHOT"
+    version = "0.0.1"
 
     repositories {
         mavenCentral()
@@ -57,4 +58,17 @@ subprojects {
             enabled = true
         }
     }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.wrapper {
+    gradleVersion = "7.5"
+    distributionType = Wrapper.DistributionType.ALL
 }
