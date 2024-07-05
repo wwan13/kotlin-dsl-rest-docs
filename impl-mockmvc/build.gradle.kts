@@ -1,5 +1,5 @@
 dependencies {
-    compileOnly(project(":api"))
+    api(project(":api"))
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
