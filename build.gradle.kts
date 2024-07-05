@@ -11,12 +11,21 @@ allprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "maven-publish")
 
     group = "io.wwan13"
     version = "0.0.1"
 
     repositories {
         mavenCentral()
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
+            }
+        }
     }
 }
 
@@ -58,14 +67,6 @@ subprojects {
         jar {
             enabled = true
             archiveClassifier.set("")
-        }
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                from(components["java"])
-            }
         }
     }
 }
