@@ -18,6 +18,16 @@ allprojects {
     repositories {
         mavenCentral()
     }
+
+    tasks {
+        bootJar {
+            enabled = false
+        }
+
+        jar {
+            enabled = true
+        }
+    }
 }
 
 subprojects {
@@ -48,14 +58,6 @@ subprojects {
             kotlinOptions {
                 jvmTarget = "17"
             }
-        }
-
-        bootJar {
-            enabled = false
-        }
-
-        jar {
-            enabled = true
         }
     }
 }
