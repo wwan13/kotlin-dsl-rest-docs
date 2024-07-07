@@ -11,12 +11,10 @@ import org.springframework.test.web.servlet.ResultActions
 
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @AutoConfigureRestDocs
-abstract class MockMvcApiDocsTest : ApiDocsTest() {
+abstract class MockMvcApiDocsTest : ApiDocsTest {
 
-    init {
-        api = MockMvcApiMethodSelector { requestBuilder, buildAction ->
-            requestBuilder.apply(buildAction).build(mockMvc())
-        }
+    protected val api = MockMvcApiMethodSelector { requestBuilder, buildAction ->
+        requestBuilder.apply(buildAction).build(mockMvc())
     }
 
     override fun documentFor(
