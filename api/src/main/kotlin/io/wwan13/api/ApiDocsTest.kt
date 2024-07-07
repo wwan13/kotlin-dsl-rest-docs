@@ -2,20 +2,14 @@ package io.wwan13.api
 
 import io.wwan13.api.document.ApiDocumentContextBuilder
 import io.wwan13.api.document.snippets.DocumentField
-import io.wwan13.api.request.ApiRequestBuilder
-import io.wwan13.api.request.HttpMethod
+import io.wwan13.api.request.ApiMethodSelector
 import org.springframework.test.web.servlet.ResultActions
 
-interface ApiDocsTest {
+abstract class ApiDocsTest {
 
-    fun api(
-        method: HttpMethod,
-        path: String,
-        vararg pathParameters: Any = arrayOf(),
-        buildAction: ApiRequestBuilder.() -> Unit
-    ): ResultActions
+    protected lateinit var api: ApiMethodSelector
 
-    fun documentFor(
+    abstract fun documentFor(
         resultAction: ResultActions,
         identifier: String,
         action: ApiDocumentContextBuilder.() -> Unit
