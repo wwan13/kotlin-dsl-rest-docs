@@ -76,7 +76,7 @@ fun `회원가입 API`() {
     every { userService.appendNormalUser(any(), any()) } returns 1L
     every { passwordEncoder.encode(any()) } returns "encoded password"
 
-    val api = api("POST", "/api/v1/user") {
+    val api = api.post("/api/v1/user") {
         requestBody(
             SignInRequest(
                 username = "username",
