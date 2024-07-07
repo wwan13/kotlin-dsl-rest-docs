@@ -14,7 +14,7 @@ allprojects {
     apply(plugin = "maven-publish")
 
     group = "io.wwan13"
-    version = "1.0.0"
+    version = "1.0.1"
 
     repositories {
         mavenCentral()
