@@ -15,7 +15,7 @@ abstract class ApiDocsTest {
         action: ApiDocumentContextBuilder.() -> Unit
     )
 
-    fun commonResponseField(): List<DocumentField> {
+    open fun commonResponseField(): List<DocumentField> {
         return listOf()
     }
 }
