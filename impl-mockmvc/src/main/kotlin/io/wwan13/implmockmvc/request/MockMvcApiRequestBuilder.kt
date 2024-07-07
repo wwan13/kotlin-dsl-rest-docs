@@ -1,6 +1,12 @@
 package io.wwan13.implmockmvc.request
 
 import io.wwan13.api.request.ApiRequestBuilder
+import io.wwan13.api.request.DELETE
+import io.wwan13.api.request.GET
+import io.wwan13.api.request.HttpMethod
+import io.wwan13.api.request.PATCH
+import io.wwan13.api.request.POST
+import io.wwan13.api.request.PUT
 import io.wwan13.implmockmvc.util.JsonSerializer
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
@@ -9,7 +15,7 @@ import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 
 class MockMvcApiRequestBuilder(
-    method: String,
+    method: HttpMethod,
     path: String,
     pathParameters: List<Any>
 ) : ApiRequestBuilder {
@@ -56,17 +62,16 @@ class MockMvcApiRequestBuilder(
     }
 
     private fun httpMethodOf(
-        method: String,
+        method: HttpMethod,
         path: String,
         pathParameters: List<Any>,
     ): MockHttpServletRequestBuilder {
         return when (method) {
-            "GET" -> RestDocumentationRequestBuilders.get(path, pathParameters)
-            "POST" -> RestDocumentationRequestBuilders.post(path, pathParameters)
-            "PATCH" -> RestDocumentationRequestBuilders.patch(path, pathParameters)
-            "PUT" -> RestDocumentationRequestBuilders.put(path, pathParameters)
-            "DELETE" -> RestDocumentationRequestBuilders.delete(path, pathParameters)
-            else -> throw IllegalArgumentException("invalid http method option")
+            GET -> RestDocumentationRequestBuilders.get(path, pathParameters)
+            POST -> RestDocumentationRequestBuilders.post(path, pathParameters)
+            PATCH -> RestDocumentationRequestBuilders.patch(path, pathParameters)
+            PUT -> RestDocumentationRequestBuilders.put(path, pathParameters)
+            DELETE -> RestDocumentationRequestBuilders.delete(path, pathParameters)
         }
     }
 }
