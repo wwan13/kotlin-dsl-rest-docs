@@ -2,14 +2,15 @@ package io.wwan13.api.document
 
 import io.wwan13.api.document.snippets.DocumentCommonEntity
 import io.wwan13.api.document.snippets.DocumentField
-import io.wwan13.api.document.snippets.DocumentAbout
+import io.wwan13.api.document.snippets.DocumentSummary
 
 class ApiDocumentContextBuilder(
     private val identifier: String,
+    private val tagInitializedInConstructorBlock: String,
     private val commonResponseFields: List<DocumentField>
 ) {
 
-    private lateinit var about: DocumentAbout
+    private lateinit var summary: DocumentSummary
     private val pathParameters: MutableList<DocumentCommonEntity> = mutableListOf()
     private val queryParameters: MutableList<DocumentCommonEntity> = mutableListOf()
     private val requestHeaders: MutableList<DocumentCommonEntity> = mutableListOf()
@@ -17,8 +18,15 @@ class ApiDocumentContextBuilder(
     private val responseHeaders: MutableList<DocumentCommonEntity> = mutableListOf()
     private val responseFields: MutableList<DocumentField> = mutableListOf()
 
-    fun about(resource: DocumentAbout) {
-        this.about = resource
+    fun summary(summary: DocumentSummary) {
+        when (summary.isTagNotInitializedInDslBlock) {
+            true -> this.summary = summary.withTag(tagInitializedInConstructorBlock)
+            false -> this.summary = summary
+        }
+    }
+
+    fun summary(summary: String) {
+        this.summary = DocumentSummary(summary)
     }
 
     fun pathParameters(vararg parameters: DocumentCommonEntity) {
@@ -47,7 +55,7 @@ class ApiDocumentContextBuilder(
 
     fun build(): ApiDocumentContext {
         return ApiDocumentContext(
-            identifier, about,
+            identifier, summary,
             pathParameters, queryParameters,
             requestHeaders, requestFields,
             responseHeaders, responseFields, commonResponseFields
