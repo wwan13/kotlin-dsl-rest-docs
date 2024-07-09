@@ -26,7 +26,7 @@ class ApiDocumentContextBuilder(
     }
 
     fun summary(summary: String) {
-        this.summary = DocumentSummary(summary)
+        this.summary = DocumentSummary(summary, tagInitializedInConstructorBlock)
     }
 
     fun pathParameters(vararg parameters: DocumentCommonEntity) {
