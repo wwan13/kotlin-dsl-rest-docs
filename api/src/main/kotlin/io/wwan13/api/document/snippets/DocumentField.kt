@@ -1,5 +1,8 @@
 package io.wwan13.api.document.snippets
 
+import org.springframework.restdocs.payload.FieldDescriptor
+import org.springframework.restdocs.payload.PayloadDocumentation
+
 infix fun String.isTypeOf(type: FieldType): DocumentField {
     return DocumentField(this, type)
 }
@@ -26,4 +29,14 @@ data class DocumentField(
     var description: String = "",
     var required: Boolean = true,
     val enumValues: String? = null
-)
+) {
+    fun toFieldDescriptor(): FieldDescriptor {
+        val descriptor = PayloadDocumentation.fieldWithPath(identifier)
+            .type(type.value)
+            .description(description + enumValues)
+        if (!required) {
+            descriptor.optional()
+        }
+        return descriptor
+    }
+}

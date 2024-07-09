@@ -1,14 +1,18 @@
 package io.wwan13.implmockmvc.docs
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper
+import com.epages.restdocs.apispec.ResourceSnippetDetails
 import io.wwan13.api.document.ApiDocumentContext
 import io.wwan13.api.document.ApiDocumentGenerator
-import org.springframework.restdocs.headers.HeaderDocumentation
-import org.springframework.restdocs.operation.preprocess.Preprocessors
-import org.springframework.restdocs.payload.PayloadDocumentation
-import org.springframework.restdocs.request.RequestDocumentation
+import io.wwan13.api.document.util.DocumentUtil
 import org.springframework.test.web.servlet.ResultHandler
-import java.util.function.Function
+
+fun ApiDocumentContext.toResourceDetail(): ResourceSnippetDetails {
+    return MockMvcRestDocumentationWrapper.resourceDetails()
+        .summary(summary.summary)
+        .description(summary.description)
+        .tag(summary.tag)
+}
 
 class MockMvcApiDocumentGenerator : ApiDocumentGenerator {
 
@@ -16,33 +20,21 @@ class MockMvcApiDocumentGenerator : ApiDocumentGenerator {
         return MockMvcRestDocumentationWrapper.document(
             context.identifier,
 
-            context.about.toResourceDetail(),
+            context.toResourceDetail(),
 
-            Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
-            Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
+            DocumentUtil.requestPreprocessor(),
+            DocumentUtil.responsePreprocessor(),
 
-            Function.identity(),
+            DocumentUtil.snippetFilter(),
 
-            RequestDocumentation.requestParameters(
-                context.queryParameters.map { it.toParameterDescriptor() }
-            ),
-            RequestDocumentation.pathParameters(
-                context.pathParameters.map { it.toParameterDescriptor() }
-            ),
+            context.toRequestParameterSnippet(),
+            context.toPathParameterSnippet(),
 
-            HeaderDocumentation.requestHeaders(
-                context.requestHeaders.map { it.toHeaderDescriptor() }
-            ),
-            PayloadDocumentation.requestFields(
-                context.requestFields.map { it.toFieldDescriptor() }
-            ),
+            context.toRequestHeaderSnippet(),
+            context.toRequestFieldSnippet(),
 
-            HeaderDocumentation.responseHeaders(
-                context.responseHeaders.map { it.toHeaderDescriptor() }
-            ),
-            PayloadDocumentation.responseFields(
-                context.allResponseFields.map { it.toFieldDescriptor() }
-            )
+            context.toResponseHeaderSnippet(),
+            context.toResponseFieldSnippet()
         )
     }
 }
