@@ -22,7 +22,7 @@ abstract class MockMvcApiDocsTest : ApiDocsTest {
         identifier: String,
         action: ApiDocumentContextBuilder.() -> Unit
     ) {
-        val builder = ApiDocumentContextBuilder(identifier, commonResponseField())
+        val builder = ApiDocumentContextBuilder(identifier, tag(), commonResponseField())
         val context = builder.apply(action).build()
         val documentGenerator = MockMvcApiDocumentGenerator()
         resultAction.andDo(documentGenerator.generate(context))
