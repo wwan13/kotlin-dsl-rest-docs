@@ -21,7 +21,7 @@ class MockMvcApiMethodSelector(
         vararg pathParameters: Any,
         buildAction: ApiRequestBuilder.() -> Unit
     ): ResultActions {
-        val requestBuilder = MockMvcApiRequestBuilder(GET, path, pathParameters.toList())
+        val requestBuilder = MockMvcApiRequestBuilder(GET, path, pathParameters)
         return applyAction(requestBuilder, buildAction)
     }
 
@@ -30,7 +30,7 @@ class MockMvcApiMethodSelector(
         vararg pathParameters: Any,
         buildAction: ApiRequestBuilder.() -> Unit
     ): ResultActions {
-        val requestBuilder = MockMvcApiRequestBuilder(POST, path, pathParameters.toList())
+        val requestBuilder = MockMvcApiRequestBuilder(POST, path, pathParameters)
         return applyAction(requestBuilder, buildAction)
     }
 
@@ -39,7 +39,7 @@ class MockMvcApiMethodSelector(
         vararg pathParameters: Any,
         buildAction: ApiRequestBuilder.() -> Unit
     ): ResultActions {
-        val requestBuilder = MockMvcApiRequestBuilder(PUT, path, pathParameters.toList())
+        val requestBuilder = MockMvcApiRequestBuilder(PUT, path, pathParameters)
         return applyAction(requestBuilder, buildAction)
     }
 
@@ -48,7 +48,7 @@ class MockMvcApiMethodSelector(
         vararg pathParameters: Any,
         buildAction: ApiRequestBuilder.() -> Unit
     ): ResultActions {
-        val requestBuilder = MockMvcApiRequestBuilder(PATCH, path, pathParameters.toList())
+        val requestBuilder = MockMvcApiRequestBuilder(PATCH, path, pathParameters)
         return applyAction(requestBuilder, buildAction)
     }
 
@@ -57,7 +57,7 @@ class MockMvcApiMethodSelector(
         vararg pathParameters: Any,
         buildAction: ApiRequestBuilder.() -> Unit
     ): ResultActions {
-        val requestBuilder = MockMvcApiRequestBuilder(DELETE, path, pathParameters.toList())
+        val requestBuilder = MockMvcApiRequestBuilder(DELETE, path, pathParameters)
         return applyAction(requestBuilder, buildAction)
     }
 }

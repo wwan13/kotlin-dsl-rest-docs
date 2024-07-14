@@ -17,13 +17,13 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 class MockMvcApiRequestBuilder(
     method: HttpMethod,
     path: String,
-    pathParameters: List<Any>
+    vararg pathParameters: Any
 ) : ApiRequestBuilder {
 
     private val builder: MockHttpServletRequestBuilder
 
     init {
-        builder = httpMethodOf(method, path, pathParameters.toList())
+        builder = httpMethodOf(method, path, pathParameters)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .characterEncoding("utf-8")
@@ -64,7 +64,7 @@ class MockMvcApiRequestBuilder(
     private fun httpMethodOf(
         method: HttpMethod,
         path: String,
-        pathParameters: List<Any>,
+        vararg pathParameters: Any,
     ): MockHttpServletRequestBuilder {
         return when (method) {
             GET -> RestDocumentationRequestBuilders.get(path, pathParameters)
