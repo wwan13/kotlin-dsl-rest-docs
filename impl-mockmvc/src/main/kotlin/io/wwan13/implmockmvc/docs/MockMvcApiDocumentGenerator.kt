@@ -27,14 +27,7 @@ class MockMvcApiDocumentGenerator : ApiDocumentGenerator {
 
             DocumentUtil.snippetFilter(),
 
-            context.toRequestParameterSnippet(),
-            context.toPathParameterSnippet(),
-
-            context.toRequestHeaderSnippet(),
-            context.toRequestFieldSnippet(),
-
-            context.toResponseHeaderSnippet(),
-            context.toResponseFieldSnippet()
+            *context.snippets
         )
     }
 }

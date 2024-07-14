@@ -12,6 +12,7 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet
 import org.springframework.restdocs.request.PathParametersSnippet
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestParametersSnippet
+import org.springframework.restdocs.snippet.Snippet
 
 data class ApiDocumentContext(
     val identifier: String,
@@ -25,6 +26,20 @@ data class ApiDocumentContext(
     val commonResponseFields: List<DocumentField>,
 ) {
 
+    val snippets: Array<Snippet>
+        get() {
+            val snippets = mutableListOf<Snippet>()
+
+            if (pathParameters.isNotEmpty()) snippets.add(toPathParameterSnippet())
+            if (queryParameters.isNotEmpty()) snippets.add(toRequestParameterSnippet())
+            if (requestHeaders.isNotEmpty()) snippets.add(toRequestHeaderSnippet())
+            if (requestFields.isNotEmpty()) snippets.add(toRequestFieldSnippet())
+            if (responseHeaders.isNotEmpty()) snippets.add(toResponseHeaderSnippet())
+            if (allResponseFields.isNotEmpty()) snippets.add(toResponseFieldSnippet())
+
+            return snippets.toTypedArray()
+        }
+
     private val allResponseFields: List<DocumentField>
         get() {
             val fields = mutableListOf<DocumentField>()
@@ -33,37 +48,37 @@ data class ApiDocumentContext(
             return fields
         }
 
-    fun toPathParameterSnippet(): PathParametersSnippet {
+    private fun toPathParameterSnippet(): PathParametersSnippet {
         return RequestDocumentation.pathParameters(
             pathParameters.map { it.toParameterDescriptor() }
         )
     }
 
-    fun toRequestParameterSnippet(): RequestParametersSnippet {
+    private fun toRequestParameterSnippet(): RequestParametersSnippet {
         return RequestDocumentation.requestParameters(
             queryParameters.map { it.toParameterDescriptor() }
         )
     }
 
-    fun toRequestHeaderSnippet(): RequestHeadersSnippet {
+    private fun toRequestHeaderSnippet(): RequestHeadersSnippet {
         return HeaderDocumentation.requestHeaders(
             requestHeaders.map { it.toHeaderDescriptor() }
         )
     }
 
-    fun toResponseHeaderSnippet(): ResponseHeadersSnippet {
+    private fun toResponseHeaderSnippet(): ResponseHeadersSnippet {
         return HeaderDocumentation.responseHeaders(
             responseHeaders.map { it.toHeaderDescriptor() }
         )
     }
 
-    fun toRequestFieldSnippet(): RequestFieldsSnippet {
+    private fun toRequestFieldSnippet(): RequestFieldsSnippet {
         return PayloadDocumentation.requestFields(
             requestFields.map { it.toFieldDescriptor() }
         )
     }
 
-    fun toResponseFieldSnippet(): ResponseFieldsSnippet {
+    private fun toResponseFieldSnippet(): ResponseFieldsSnippet {
         return PayloadDocumentation.responseFields(
             allResponseFields.map { it.toFieldDescriptor() }
         )
