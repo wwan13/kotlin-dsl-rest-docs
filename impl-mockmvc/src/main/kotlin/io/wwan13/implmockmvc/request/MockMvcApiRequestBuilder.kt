@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 class MockMvcApiRequestBuilder(
     method: HttpMethod,
     path: String,
-    vararg pathParameters: Any
+    pathParameters: Array<out Any>
 ) : ApiRequestBuilder {
 
     private val builder: MockHttpServletRequestBuilder
@@ -64,14 +64,14 @@ class MockMvcApiRequestBuilder(
     private fun httpMethodOf(
         method: HttpMethod,
         path: String,
-        vararg pathParameters: Any,
+        pathParameters: Array<out Any>,
     ): MockHttpServletRequestBuilder {
         return when (method) {
-            GET -> RestDocumentationRequestBuilders.get(path, pathParameters)
-            POST -> RestDocumentationRequestBuilders.post(path, pathParameters)
-            PATCH -> RestDocumentationRequestBuilders.patch(path, pathParameters)
-            PUT -> RestDocumentationRequestBuilders.put(path, pathParameters)
-            DELETE -> RestDocumentationRequestBuilders.delete(path, pathParameters)
+            GET -> RestDocumentationRequestBuilders.get(path, *pathParameters)
+            POST -> RestDocumentationRequestBuilders.post(path, *pathParameters)
+            PATCH -> RestDocumentationRequestBuilders.patch(path, *pathParameters)
+            PUT -> RestDocumentationRequestBuilders.put(path, *pathParameters)
+            DELETE -> RestDocumentationRequestBuilders.delete(path, *pathParameters)
         }
     }
 }
