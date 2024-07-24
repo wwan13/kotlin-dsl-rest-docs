@@ -8,7 +8,7 @@ sealed class FieldType(
 )
 
 data object ARRAY : FieldType(JsonFieldType.ARRAY)
-data object BOOLEAN : FieldType(JsonFieldType.ARRAY)
+data object BOOLEAN : FieldType(JsonFieldType.BOOLEAN)
 data object OBJECT : FieldType(JsonFieldType.OBJECT)
 data object NUMBER : FieldType(JsonFieldType.NUMBER)
 data object NULL : FieldType(JsonFieldType.NULL)
