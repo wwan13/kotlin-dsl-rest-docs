@@ -11,7 +11,7 @@ infix fun <T : Enum<T>> String.isTypeOf(enumType: ENUM<T>): DocumentField {
     return DocumentField(
         identifier = this,
         type = enumType,
-        enumValues = " (${enumType.entries.joinToString(", ")})"
+        enumValues = enumType.entries.toString()
     )
 }
 
@@ -28,12 +28,12 @@ data class DocumentField(
     val type: FieldType,
     var description: String = "",
     var required: Boolean = true,
-    val enumValues: String? = null
+    val enumValues: String = ""
 ) {
     fun toFieldDescriptor(): FieldDescriptor {
         val descriptor = PayloadDocumentation.fieldWithPath(identifier)
             .type(type.value)
-            .description(description + enumValues)
+            .description(description)
         if (!required) {
             descriptor.optional()
         }
