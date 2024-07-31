@@ -33,7 +33,7 @@ data class DocumentField(
     fun toFieldDescriptor(): FieldDescriptor {
         val descriptor = PayloadDocumentation.fieldWithPath(identifier)
             .type(type.value)
-            .description(description)
+            .description(description + enumValues)
         if (!required) {
             descriptor.optional()
         }
