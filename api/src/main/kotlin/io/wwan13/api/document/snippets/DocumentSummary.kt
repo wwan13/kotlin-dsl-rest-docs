@@ -27,6 +27,10 @@ data class DocumentSummary(
         return DocumentSummary(summary, customTag, description)
     }
 
+    fun hasDescription(): Boolean {
+        return description.isNotBlank()
+    }
+
     companion object {
         const val DEFAULT_DOCUMENT_TAG = "api"
     }

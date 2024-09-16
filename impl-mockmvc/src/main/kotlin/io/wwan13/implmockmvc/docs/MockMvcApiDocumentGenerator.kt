@@ -7,10 +7,10 @@ import io.wwan13.api.document.ApiDocumentGenerator
 import io.wwan13.api.document.util.DocumentUtil
 import org.springframework.test.web.servlet.ResultHandler
 
-fun ApiDocumentContext.toResourceDetail(): ResourceSnippetDetails {
+fun ApiDocumentContext.toResourceDetail(context: ApiDocumentContext): ResourceSnippetDetails {
     return MockMvcRestDocumentationWrapper.resourceDetails()
         .summary(summary.summary)
-        .description(summary.description)
+        .description(context.description)
         .tag(summary.tag)
 }
 
@@ -20,7 +20,7 @@ class MockMvcApiDocumentGenerator : ApiDocumentGenerator {
         return MockMvcRestDocumentationWrapper.document(
             context.identifier,
 
-            context.toResourceDetail(),
+            context.toResourceDetail(context),
 
             DocumentUtil.requestPreprocessor(),
             DocumentUtil.responsePreprocessor(),

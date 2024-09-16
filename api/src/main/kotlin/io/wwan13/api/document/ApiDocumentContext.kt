@@ -1,8 +1,12 @@
 package io.wwan13.api.document
 
 import io.wwan13.api.document.snippets.DocumentCommonEntity
+import io.wwan13.api.document.snippets.DocumentEnum
+import io.wwan13.api.document.snippets.DocumentError
 import io.wwan13.api.document.snippets.DocumentField
+import io.wwan13.api.document.snippets.DocumentGuide
 import io.wwan13.api.document.snippets.DocumentSummary
+import io.wwan13.api.document.util.MarkdownConverter
 import org.springframework.restdocs.headers.HeaderDocumentation
 import org.springframework.restdocs.headers.RequestHeadersSnippet
 import org.springframework.restdocs.headers.ResponseHeadersSnippet
@@ -17,6 +21,9 @@ import org.springframework.restdocs.snippet.Snippet
 data class ApiDocumentContext(
     val identifier: String,
     val summary: DocumentSummary,
+    val guide: DocumentGuide,
+    val enums: List<DocumentEnum>,
+    val errors: List<DocumentError>,
     val pathParameters: List<DocumentCommonEntity>,
     val queryParameters: List<DocumentCommonEntity>,
     val requestHeaders: List<DocumentCommonEntity>,
@@ -39,6 +46,14 @@ data class ApiDocumentContext(
 
             return snippets.toTypedArray()
         }
+
+    val description: String
+        get() = MarkdownConverter.join(
+            summary.description,
+            MarkdownConverter.convertGuide(guide),
+            MarkdownConverter.convertEnums(enums),
+            MarkdownConverter.convertErrors(errors),
+        )
 
     private val allResponseFields: List<DocumentField>
         get() {

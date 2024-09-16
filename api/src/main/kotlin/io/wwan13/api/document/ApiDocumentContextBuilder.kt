@@ -1,7 +1,10 @@
 package io.wwan13.api.document
 
 import io.wwan13.api.document.snippets.DocumentCommonEntity
+import io.wwan13.api.document.snippets.DocumentEnum
+import io.wwan13.api.document.snippets.DocumentError
 import io.wwan13.api.document.snippets.DocumentField
+import io.wwan13.api.document.snippets.DocumentGuide
 import io.wwan13.api.document.snippets.DocumentSummary
 
 class ApiDocumentContextBuilder(
@@ -11,6 +14,9 @@ class ApiDocumentContextBuilder(
 ) {
 
     private lateinit var summary: DocumentSummary
+    private var guide: DocumentGuide = DocumentGuide()
+    private val enums: MutableList<DocumentEnum> = mutableListOf()
+    private val errors: MutableList<DocumentError> = mutableListOf()
     private val pathParameters: MutableList<DocumentCommonEntity> = mutableListOf()
     private val queryParameters: MutableList<DocumentCommonEntity> = mutableListOf()
     private val requestHeaders: MutableList<DocumentCommonEntity> = mutableListOf()
@@ -27,6 +33,18 @@ class ApiDocumentContextBuilder(
 
     fun summary(summary: String) {
         this.summary = DocumentSummary(summary, tagInitializedInConstructorBlock)
+    }
+
+    fun guide(vararg about: String) {
+        this.guide = DocumentGuide(about.toList())
+    }
+
+    fun containedEnums(vararg values: DocumentEnum) {
+        enums.addAll(values)
+    }
+
+    fun expectedErrors(vararg errors: DocumentError) {
+        this.errors.addAll(errors)
     }
 
     fun pathParameters(vararg parameters: DocumentCommonEntity) {
@@ -55,7 +73,7 @@ class ApiDocumentContextBuilder(
 
     fun build(): ApiDocumentContext {
         return ApiDocumentContext(
-            identifier, summary,
+            identifier, summary, guide, enums, errors,
             pathParameters, queryParameters,
             requestHeaders, requestFields,
             responseHeaders, responseFields, commonResponseFields
