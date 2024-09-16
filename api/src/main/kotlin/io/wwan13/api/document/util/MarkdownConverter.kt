@@ -8,6 +8,7 @@ object MarkdownConverter {
 
     fun convertGuide(guide: DocumentGuide): String {
         return """
+            |
             |### Api Guide
             |
             |${guide.value.joinToString("\n") { "- $it" }}
@@ -26,6 +27,7 @@ object MarkdownConverter {
         }
 
         return """
+            |
             |### Enum Values
             |
             |<details>
@@ -40,6 +42,7 @@ object MarkdownConverter {
 
     fun convertErrors(errors: List<DocumentError>): String {
         return """
+            |
             |### Error Codes
             |
             |<details>
@@ -54,7 +57,7 @@ object MarkdownConverter {
         """.trimMargin()
     }
 
-    fun join(vararg values: String): String {
+    fun join(values: List<String>): String {
         return values.joinToString("<br/>")
     }
 }

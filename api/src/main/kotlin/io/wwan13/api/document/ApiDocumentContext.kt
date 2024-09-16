@@ -17,9 +17,10 @@ import org.springframework.restdocs.request.PathParametersSnippet
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestParametersSnippet
 import org.springframework.restdocs.snippet.Snippet
+import kotlin.String as String1
 
 data class ApiDocumentContext(
-    val identifier: String,
+    val identifier: String1,
     val summary: DocumentSummary,
     val guide: DocumentGuide,
     val enums: List<DocumentEnum>,
@@ -47,13 +48,17 @@ data class ApiDocumentContext(
             return snippets.toTypedArray()
         }
 
-    val description: String
-        get() = MarkdownConverter.join(
-            summary.description,
-            MarkdownConverter.convertGuide(guide),
-            MarkdownConverter.convertEnums(enums),
-            MarkdownConverter.convertErrors(errors),
-        )
+    val description: String1
+        get() {
+            val elements = mutableListOf<String1>()
+
+            if (summary.hasDescription()) elements.add(summary.description)
+            if (guide.hasValue()) elements.add(MarkdownConverter.convertGuide(guide))
+            if (enums.isNotEmpty()) elements.add(MarkdownConverter.convertEnums(enums))
+            if (errors.isNotEmpty()) elements.add(MarkdownConverter.convertErrors(errors))
+
+            return MarkdownConverter.join(elements)
+        }
 
     private val allResponseFields: List<DocumentField>
         get() {
