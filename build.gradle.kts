@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "2.7.13"
+    id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.5"
     kotlin("jvm") version "1.9.24"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
@@ -14,7 +14,7 @@ allprojects {
     apply(plugin = "maven-publish")
 
     group = "io.wwan13"
-    version = "1.2.0"
+    version = "2.0.0"
 
     repositories {
         mavenCentral()
