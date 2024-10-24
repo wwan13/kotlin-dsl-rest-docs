@@ -17,10 +17,9 @@ import org.springframework.restdocs.request.PathParametersSnippet
 import org.springframework.restdocs.request.QueryParametersSnippet
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.snippet.Snippet
-import kotlin.String as String1
 
 data class ApiDocumentContext(
-    val identifier: String1,
+    val identifier: String,
     val summary: DocumentSummary,
     val guide: DocumentGuide,
     val enums: List<DocumentEnum>,
@@ -39,8 +38,8 @@ data class ApiDocumentContext(
             val snippets = mutableListOf<Snippet>()
 
             if (pathParameters.isNotEmpty()) snippets.add(toPathParameterSnippet())
-            if (queryParameters.isNotEmpty()) snippets.add(toRequestParameterSnippet())
-            if (requestHeaders.isNotEmpty()) snippets.add(toRequestQueryParameterSnippet())
+            if (queryParameters.isNotEmpty()) snippets.add(toQueryParameterSnippet())
+            if (requestHeaders.isNotEmpty()) snippets.add(toRequestHeaderSnippet())
             if (requestFields.isNotEmpty()) snippets.add(toRequestFieldSnippet())
             if (responseHeaders.isNotEmpty()) snippets.add(toResponseHeaderSnippet())
             if (allResponseFields.isNotEmpty()) snippets.add(toResponseFieldSnippet())
@@ -48,9 +47,9 @@ data class ApiDocumentContext(
             return snippets.toTypedArray()
         }
 
-    val description: String1
+    val description: String
         get() {
-            val elements = mutableListOf<String1>()
+            val elements = mutableListOf<String>()
 
             if (summary.hasDescription()) elements.add(summary.description)
             if (guide.hasValue()) elements.add(MarkdownConverter.convertGuide(guide))
@@ -74,13 +73,13 @@ data class ApiDocumentContext(
         )
     }
 
-    private fun toRequestParameterSnippet(): QueryParametersSnippet {
+    private fun toQueryParameterSnippet(): QueryParametersSnippet {
         return RequestDocumentation.queryParameters(
             queryParameters.map { it.toParameterDescriptor() }
         )
     }
 
-    private fun toRequestQueryParameterSnippet(): RequestHeadersSnippet {
+    private fun toRequestHeaderSnippet(): RequestHeadersSnippet {
         return HeaderDocumentation.requestHeaders(
             requestHeaders.map { it.toHeaderDescriptor() }
         )
