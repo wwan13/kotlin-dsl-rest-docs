@@ -14,8 +14,8 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.RequestFieldsSnippet
 import org.springframework.restdocs.payload.ResponseFieldsSnippet
 import org.springframework.restdocs.request.PathParametersSnippet
+import org.springframework.restdocs.request.QueryParametersSnippet
 import org.springframework.restdocs.request.RequestDocumentation
-import org.springframework.restdocs.request.RequestParametersSnippet
 import org.springframework.restdocs.snippet.Snippet
 import kotlin.String as String1
 
@@ -40,7 +40,7 @@ data class ApiDocumentContext(
 
             if (pathParameters.isNotEmpty()) snippets.add(toPathParameterSnippet())
             if (queryParameters.isNotEmpty()) snippets.add(toRequestParameterSnippet())
-            if (requestHeaders.isNotEmpty()) snippets.add(toRequestHeaderSnippet())
+            if (requestHeaders.isNotEmpty()) snippets.add(toRequestQueryParameterSnippet())
             if (requestFields.isNotEmpty()) snippets.add(toRequestFieldSnippet())
             if (responseHeaders.isNotEmpty()) snippets.add(toResponseHeaderSnippet())
             if (allResponseFields.isNotEmpty()) snippets.add(toResponseFieldSnippet())
@@ -74,13 +74,13 @@ data class ApiDocumentContext(
         )
     }
 
-    private fun toRequestParameterSnippet(): RequestParametersSnippet {
-        return RequestDocumentation.requestParameters(
+    private fun toRequestParameterSnippet(): QueryParametersSnippet {
+        return RequestDocumentation.queryParameters(
             queryParameters.map { it.toParameterDescriptor() }
         )
     }
 
-    private fun toRequestHeaderSnippet(): RequestHeadersSnippet {
+    private fun toRequestQueryParameterSnippet(): RequestHeadersSnippet {
         return HeaderDocumentation.requestHeaders(
             requestHeaders.map { it.toHeaderDescriptor() }
         )
