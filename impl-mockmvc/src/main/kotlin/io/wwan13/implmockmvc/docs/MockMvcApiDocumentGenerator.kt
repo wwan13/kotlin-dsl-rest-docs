@@ -5,7 +5,7 @@ import com.epages.restdocs.apispec.ResourceSnippetDetails
 import io.wwan13.api.document.ApiDocumentContext
 import io.wwan13.api.document.ApiDocumentGenerator
 import io.wwan13.api.document.util.DocumentUtil
-import org.springframework.test.web.servlet.ResultHandler
+import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler
 
 fun ApiDocumentContext.toResourceDetail(context: ApiDocumentContext): ResourceSnippetDetails {
     return MockMvcRestDocumentationWrapper.resourceDetails()
@@ -16,7 +16,7 @@ fun ApiDocumentContext.toResourceDetail(context: ApiDocumentContext): ResourceSn
 
 class MockMvcApiDocumentGenerator : ApiDocumentGenerator {
 
-    override fun generate(context: ApiDocumentContext): ResultHandler {
+    override fun generate(context: ApiDocumentContext): RestDocumentationResultHandler {
         return MockMvcRestDocumentationWrapper.document(
             context.identifier,
 
